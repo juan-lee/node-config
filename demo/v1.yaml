@@ -1,0 +1,5 @@
+apiVersion: config.juan-lee.dev/v1
+kind: NodeConfiguration
+containerRuntime:
+  version: 1.5.0
+  endpoint: unix:///var/run/containerd/containerd.sock

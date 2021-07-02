@@ -1,0 +1,4 @@
+apiVersion: config.juan-lee.dev/v1beta1
+kind: NodeConfiguration
+containerRuntime:
+  version: 1.5.0
