@@ -17,7 +17,7 @@ shell:
 		-v $(CACHE_DIR)/cache:/.cache/go-build \
 		-w /go/src/github.com/juan-lee/node-config \
 		-u $(shell id -u):$(shell id -g) \
-		golang:1.14.4 \
+		golang:1.21 \
 		$(COMMAND)
 
 binary: autogen vendor
@@ -27,6 +27,7 @@ autogen: /go/bin/deepcopy-gen /go/bin/defaulter-gen /go/bin/conversion-gen
 	# Let the boilerplate be empty
 	touch /tmp/boilerplate
 	go mod vendor
+
 	/go/bin/deepcopy-gen \
 		--input-dirs ${APIS_DIR}/config,${APIS_DIR}/config/v1,${APIS_DIR}/config/v1beta1 \
 		--bounding-dirs ${APIS_DIR} \
@@ -44,7 +45,7 @@ autogen: /go/bin/deepcopy-gen /go/bin/defaulter-gen /go/bin/conversion-gen
 		-h /tmp/boilerplate
 
 /go/bin/%: vendor
-	go get k8s.io/code-generator/cmd/$*
+	go install k8s.io/code-generator/cmd/$*@v0.28.2
 
 vendor:
 	if [[ ! -f go.mod ]]; then go mod init github.com/juan-lee/node-config; fi
